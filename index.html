@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oyxies Shop</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #0a0f1c;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    /* Navigation bar */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+      z-index: 1000;
+    }
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ff1a1a;
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 20px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: #ff1a1a;
+    }
+
+    /* Sections */
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 120px 20px 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #ff1a1a;
+      text-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.6);
+      margin-bottom: 15px;
+    }
+    .subtitle {
+      font-size: 1.2rem;
+      color: #ddd;
+      margin-bottom: 30px;
+    }
+
+    /* Shop Buttons */
+    .shop-item {
+      margin: 20px 0;
+      position: relative;
+    }
+    .glow-button {
+      display: inline-block;
+      padding: 15px 35px;
+      background: #ff1a1a;
+      border-radius: 25px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.9), 0 0 50px rgba(255, 0, 0, 0.6);
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: transform 0.2s ease-in-out;
+    }
+    .glow-button:hover {
+      transform: scale(1.05);
+    }
+    .shop-subtext {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: #ddd;
+    }
+    .shop-subtext u {
+      text-decoration: underline;
+    }
+
+    /* Out of stock style */
+    .disabled-button {
+      background: #333;
+      color: #777;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+    .out-of-stock {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-10deg);
+      background: transparent;
+      color: red;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255,0,0,0.8);
+    }
+
+    /* Bubbles */
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 0, 0, 0.4);
+      filter: blur(20px);
+      animation: float 20s infinite;
+      z-index: 0;
+    }
+    .bubble:nth-child(1) { width: 200px; height: 200px; top: 20%; left: 15%; animation-duration: 25s; }
+    .bubble:nth-child(2) { width: 300px; height: 300px; bottom: 10%; right: 20%; animation-duration: 30s; }
+    .bubble:nth-child(3) { width: 150px; height: 150px; top: 60%; left: 40%; animation-duration: 18s; }
+    .bubble:nth-child(4) { width: 100px; height: 100px; top: 10%; right: 10%; animation-duration: 22s; }
+    .bubble:nth-child(5) { width: 250px; height: 250px; bottom: 20%; left: 25%; animation-duration: 28s; }
+    .bubble:nth-child(6) { width: 180px; height: 180px; top: 75%; right: 30%; animation-duration: 20s; }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-50px); }
+      100% { transform: translateY(0); }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Big Discord Button */
+    .discord-button {
+      display: inline-block;
+      padding: 25px 60px;
+      background: transparent;
+      border: 3px solid white;
+      border-radius: 50px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: white;
+      text-shadow: 0 0 15px white, 0 0 40px white;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.9), 0 0 60px rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      animation: pulse 2s infinite;
+      transition: transform 0.3s ease-in-out;
+      text-decoration: none;
+    }
+    .discord-button:hover {
+      transform: scale(1.1);
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.9), 0 0 60px rgba(255, 255, 255, 0.6); }
+      50% { box-shadow: 0 0 50px rgba(255, 255, 255, 1), 0 0 100px rgba(255, 255, 255, 0.8); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Oyxies Shop</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#discord">Discord</a></li>
+    </ul>
+  </nav>
+
+  <!-- Background bubbles -->
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+
+  <!-- Sections -->
+  <section id="home">
+    <h1 class="title">Oyxies Shop: Cheap Brainrotsss</h1>
+    <p class="subtitle">ever thought of a site you can buy brainrots for CHEAP? well thats us</p>
+    <a href="#shop" class="glow-button">Buy Brainrotz</a>
+  </section>
+
+  <section id="shop">
+    <h1 class="title">Shop Brainrotz</h1>
+
+    <!-- Item 1 -->
+    <div class="shop-item">
+      <a class="glow-button">Buy La Grande</a>
+      <div class="shop-subtext">500 Robux or 5 Dollars<br><u>@c4rtt. on Discord to buy</u></div>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="shop-item">
+      <a class="glow-button">Buy Los Combinasionas</a>
+      <div class="shop-subtext">300 Robux<br><u>@c4rtt. on Discord to buy</u></div>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="shop-item">
+      <div class="out-of-stock">OUT OF STOCK</div>
+      <a class="glow-button disabled-button">Garama and Madundung</a>
+      <div class="shop-subtext">Unavailable right now</div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h1 class="title">About Oyxies</h1>
+    <p class="subtitle">We started Oyxies Shop to bring affordable Brainrotz to everyone.</p>
+  </section>
+
+  <section id="discord">
+    <h1 class="title">Join Our Discord</h1>
+    <p class="subtitle">Click below to connect with our community.</p>
+    <a href="https://discord.gg/Zw2zCGVuG2" target="_blank" class="discord-button">DISCORD</a>
+  </section>
+</body>
+</html>
